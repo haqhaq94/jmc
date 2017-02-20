@@ -1,0 +1,11 @@
+﻿@model InstituteMVC.ViewModels.SectionVM
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@Html.Partial("_ClassSelection")
+@Html.TextBoxFor(vm=> vm.SectionName,Model.SectionName)
+@Html.TextBoxFor(vm => vm.Timing, Model.Timing)
+@Html.RadioButtonFor(vm => vm.Sessions.SlctdSesstion,Model.Sessions.Sessions)
