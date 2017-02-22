@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,6 +9,8 @@ namespace InstituteMVC.ViewModels
 {
     public class ClassVM
     {
+     
+        [Required(ErrorMessage="Please Select Class")]
         public string SlctdClassVal { get; set; }
         public IEnumerable<SelectListItem> ClassList
         {
@@ -30,7 +33,8 @@ namespace InstituteMVC.ViewModels
                 classes.Add(new SelectListItem() { Text = "14", Value = "14" });
                 classes.Add(new SelectListItem() { Text = "15", Value = "15" });
                 classes.Add(new SelectListItem() { Text = "16", Value = "16" });
-                return defualtVal.Concat(classes);
+                //return defualtVal.Concat(classes);
+                return classes;
             }
         }
 

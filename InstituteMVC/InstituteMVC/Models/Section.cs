@@ -13,6 +13,7 @@ namespace InstituteMVC.Model
         [Key, Column(Order = 0)]
         public int classId { get; set; }
         public string classNameCode { get; set; }
+        [DataType(DataType.Time)]
         public DateTime Timeing { get; set; }
         public int Fee { get; set; }
         public bool IsReady { get; set; }
@@ -22,6 +23,10 @@ namespace InstituteMVC.Model
         public bool isActive { get; set; }
 
         public virtual Session Session { get; set; }
-        
+
+        public void setSectionId(int SlctdClass,int lasVal)
+        {
+            classId = SlctdClass + lasVal;
+        }
     }
 }

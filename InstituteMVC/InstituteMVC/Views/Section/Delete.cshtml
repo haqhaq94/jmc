@@ -1,0 +1,73 @@
+﻿@model InstituteMVC.Model.Section
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Section</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.classNameCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.classNameCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Timeing)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Timeing)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsReady)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsReady)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Issent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Issent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isActive)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

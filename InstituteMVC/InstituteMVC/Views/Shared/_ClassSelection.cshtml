@@ -1,3 +1,8 @@
 ﻿@model InstituteMVC.ViewModels.SectionVM
-
-@Html.DropDownListFor(vm => vm.Class.SlctdClassVal,Model.Class.ClassList)
+<div class="form-group">
+    @Html.LabelFor(model => model.Class.SlctdClassVal, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+       @Html.DropDownListFor(vm => vm.Class.SlctdClassVal, Model.Class.ClassList,"--Please Select--")
+        @Html.ValidationMessageFor(model => model.Class.SlctdClassVal)
+    </div>
+</div>

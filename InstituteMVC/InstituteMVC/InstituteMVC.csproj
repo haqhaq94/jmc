@@ -39,6 +39,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=5.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -316,12 +320,16 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_ClassSelection.cshtml" />
-    <Content Include="Views\Section\Index.cshtml" />
     <Content Include="Views\Session\Create.cshtml" />
     <Content Include="Views\Session\Delete.cshtml" />
     <Content Include="Views\Session\Details.cshtml" />
     <Content Include="Views\Session\Edit.cshtml" />
     <Content Include="Views\Session\Index.cshtml" />
+    <Content Include="Views\Section\Create.cshtml" />
+    <Content Include="Views\Section\Delete.cshtml" />
+    <Content Include="Views\Section\Details.cshtml" />
+    <Content Include="Views\Section\Edit.cshtml" />
+    <Content Include="Views\Section\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

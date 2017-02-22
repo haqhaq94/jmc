@@ -1,11 +1,64 @@
-﻿@model InstituteMVC.ViewModels.SectionVM
+﻿@model IEnumerable<InstituteMVC.Model.Section>
+
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Index</h2>
 
-@Html.Partial("_ClassSelection")
-@Html.TextBoxFor(vm=> vm.SectionName,Model.SectionName)
-@Html.TextBoxFor(vm => vm.Timing, Model.Timing)
-@Html.RadioButtonFor(vm => vm.Sessions.SlctdSesstion,Model.Sessions.Sessions)
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.classNameCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Timeing)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsReady)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Issent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.isActive)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.classNameCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Timeing)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fee)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsReady)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Issent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.isActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new {  id=item.classId  }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

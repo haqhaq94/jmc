@@ -47,10 +47,11 @@ namespace InstituteMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="SstartDate,SEndDate,SName,IsActive")] Session session)
+        public ActionResult Create([Bind(Include="SstartDate,SName")] Session session)
         {
             if (ModelState.IsValid)
             {
+                session.IsActive = true;
                 db.Session.Add(session);
                 db.SaveChanges();
                 return RedirectToAction("Index");

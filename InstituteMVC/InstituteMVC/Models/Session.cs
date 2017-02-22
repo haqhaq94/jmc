@@ -11,9 +11,11 @@ namespace InstituteMVC.Model
     {
         [Key]
         [Display(Name="Start Date")]
+        [Required]
+        [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime SstartDate { get; set; }
         [Display(Name = "End Date")]
-        public DateTime SEndDate { get; set; }
+        public DateTime? SEndDate { get; set; }
         [Display(Name = "Session Name")]
         public string SName { get; set; }
         public bool IsActive { get; set; }
