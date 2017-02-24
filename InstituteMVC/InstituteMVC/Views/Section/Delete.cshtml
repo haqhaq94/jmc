@@ -1,4 +1,4 @@
-﻿@model InstituteMVC.Model.Section
+﻿@model InstituteMVC.ViewModels.SectionVM
 
 @{
     ViewBag.Title = "Delete";
@@ -13,52 +13,30 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.classNameCode)
+            @Html.DisplayNameFor(model => model.SectionName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.classNameCode)
+            @Html.DisplayFor(model => model.SectionName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Timeing)
+            @Html.DisplayNameFor(model => model.Timing)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Timeing)
+            @Html.DisplayFor(model => model.Timing)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Fee)
+            @Html.DisplayNameFor(model => model.Sessions.SlctdSesstion)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Fee)
+            @Html.DisplayFor(model => model.Sessions.SlctdSesstion)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IsReady)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsReady)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Issent)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Issent)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.isActive)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.isActive)
-        </dd>
+        
 
     </dl>
 

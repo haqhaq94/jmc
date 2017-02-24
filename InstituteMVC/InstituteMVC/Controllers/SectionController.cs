@@ -15,6 +15,7 @@ namespace InstituteMVC.Controllers
     public class SectionController : Controller
     {
         private InstituteContext db = new InstituteContext();
+        DAO dao = new DAO();
 
         // GET: /Section/
         public ActionResult Index()
@@ -23,13 +24,13 @@ namespace InstituteMVC.Controllers
         }
 
         // GET: /Section/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(string id, int sdate)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Section section = db.Class.Find(id);
+            Section section = db.Class.Find(id,sdate);
             if (section == null)
             {
                 return HttpNotFound();
@@ -53,12 +54,22 @@ namespace InstituteMVC.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                int maxClassId = Convert.ToInt32((from cls in db.Class.Where(x => x.SDate == section.Sessions.SlctdSesstion && x.classId.Substring(0, 2) == section.Class.SlctdClassVal)
+                                  select cls.classId.Substring(2, 2)).Max()) +1 ;
+
+                
                 Section sc = new Section();
                 sc.classNameCode = section.SectionName;
+                sc.Timeing = (System.TimeSpan) section.Timing;
                 sc.SDate = section.Sessions.SlctdSesstion;
-                sc.Timeing = (DateTime) section.Timing;
+                if(maxClassId > 9)
+                    sc.classId = section.Class.SlctdClassVal + maxClassId;
+                else
+                    sc.classId = section.Class.SlctdClassVal+ "0" + maxClassId;
                 db.Class.Add(sc);
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
             section = ConfigureSection();
@@ -66,13 +77,13 @@ namespace InstituteMVC.Controllers
         }
 
         // GET: /Section/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(string id, int sdate)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Section section = db.Class.Find(id);
+            Section section = db.Class.Find(id, sdate);
             if (section == null)
             {
                 return HttpNotFound();
@@ -85,7 +96,7 @@ namespace InstituteMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="classId,SDate,classNameCode,Timeing,Fee,IsReady,Issent,isActive")] Section section)
+        public ActionResult Edit(SectionVM section)
         {
             if (ModelState.IsValid)
             {
@@ -97,13 +108,13 @@ namespace InstituteMVC.Controllers
         }
 
         // GET: /Section/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(string id, int sdate)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Section section = db.Class.Find(id);
+            Section section = db.Class.Find(id,sdate);
             if (section == null)
             {
                 return HttpNotFound();
@@ -114,10 +125,11 @@ namespace InstituteMVC.Controllers
         // POST: /Section/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id, int sdate)
         {
-            Section section = db.Class.Find(id);
-            db.Class.Remove(section);
+            Section section = db.Class.Find(id, sdate);
+            section.isActive = false;
+            db.Entry(section).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

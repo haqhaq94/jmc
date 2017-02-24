@@ -11,6 +11,7 @@ namespace InstituteMVC.ViewModels
     {
      
         [Required(ErrorMessage="Please Select Class")]
+        [Display(Name = "Select Class")]
         public string SlctdClassVal { get; set; }
         public IEnumerable<SelectListItem> ClassList
         {

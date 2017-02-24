@@ -17,16 +17,16 @@ namespace InstituteMVC.Model
         [Key, Column(Order = 2)]
         public int SDate { get; set; }
 
-        public int ClassID { get; set; }
+        public string ClassID { get; set; }
         public string InnerRollNo { get; set; }
         public bool IsActive { get; set; }
         public bool FeeStatus { get; set; }
         public bool AttStatus { get; set; }
-        public DateTime EnrolDate { get; set; }
+        public Nullable<System.DateTime> EnrolDate { get; set; }
         public bool OnLeave { get; set; }
 
         public virtual BioData BioData { get; set; }
-
+        
         public Student()
         {
             EnrolDate = DateTime.Now;

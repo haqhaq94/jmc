@@ -19,17 +19,9 @@
             @Html.DisplayNameFor(model => model.Timeing)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Fee)
+            @Html.DisplayNameFor(model => model.SDate)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsReady)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Issent)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.isActive)
-        </th>
+        
         <th></th>
     </tr>
 
@@ -42,21 +34,12 @@
             @Html.DisplayFor(modelItem => item.Timeing)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Fee)
+            @Html.DisplayFor(modelItem => item.SDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IsReady)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Issent)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.isActive)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new {  id=item.classId  }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "Edit", new { id = item.classId,SDate = item.SDate }) |
+            @Html.ActionLink("Details", "Details", new { id = item.classId, SDate = item.SDate }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.classId, SDate = item.SDate })
         </td>
     </tr>
 }

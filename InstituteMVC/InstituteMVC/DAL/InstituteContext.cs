@@ -18,6 +18,8 @@ namespace InstituteMVC.DAL
         public DbSet<Student> Student { get; set; }
         public DbSet<Test> Test { get; set; }
 
+        public System.Data.Entity.DbSet<InstituteMVC.Model.Subject> Subjects { get; set; }
+
         //protected override void OnModelCreating(DbModelBuilder modelBuilder)
         //{
             
