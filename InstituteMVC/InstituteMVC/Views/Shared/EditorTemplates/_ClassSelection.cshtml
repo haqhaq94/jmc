@@ -1,0 +1,43 @@
+﻿@model InstituteMVC.ViewModels.ClassVM          
+<div class="form-group">
+    @Html.LabelFor(model => model.SlctdClassVal, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+       @Html.DropDownListFor(model => model.SlctdClassVal, Model.ClassList, "--Please Select--")
+        @Html.ValidationMessageFor(model => model.SlctdClassVal)
+    </div>
+</div>
+
+@if (Model.DisplaySection)
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.SlctdSection, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.SlctdSection, new List<SelectListItem>(), "--Please Select--", new { @id = "SlctdSection" })
+            @Html.ValidationMessageFor(model => model.SlctdSection)
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#Class_SlctdClassVal').change(function () {
+            $.ajax({
+                type: "post",
+                url: "/Section/GetSections",
+                data: { classid: $('#Class_SlctdClassVal').val() },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    var district = "<select id='SlctdSection'>";
+                    district = district + '<option value="">--Please Select--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        district = district + '<option value=' + data[i]["Id"] + '>' + data[i]["Name"] + '</option>';
+                    }
+                    district = district + '</select>';
+                    $('#SlctdSection').html(district);
+                }
+            });
+        });
+
+
+    });
+</script> 

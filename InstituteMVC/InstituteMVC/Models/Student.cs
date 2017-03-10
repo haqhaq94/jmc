@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InstituteMVC.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,7 +11,7 @@ namespace InstituteMVC.Model
 {
     public class Student
     {
-
+        
         public int bioID { get; set; }
         [Key, Column(Order = 1)]
         public string CR { get; set; }
@@ -26,10 +27,13 @@ namespace InstituteMVC.Model
         public bool OnLeave { get; set; }
 
         public virtual BioData BioData { get; set; }
+        public virtual ICollection<StudentSubjectMapping> StudentSubjectMappings { get; set; }
         
         public Student()
         {
             EnrolDate = DateTime.Now;
+
+            this.StudentSubjectMappings = new HashSet<StudentSubjectMapping>();
         }
     }
 }

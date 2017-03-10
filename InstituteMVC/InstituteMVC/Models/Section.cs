@@ -1,4 +1,5 @@
-﻿using InstituteMVC.Services;
+﻿using InstituteMVC.Models;
+using InstituteMVC.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -25,6 +26,7 @@ namespace InstituteMVC.Model
         public bool isActive { get; set; }
 
         public virtual Session Session { get; set; }
+        public virtual ICollection<SectionSubjectMapping> SectionSubjectMappings { get; set; }
 
         public void setSectionId(int SDate,string SlctdClass)
         {

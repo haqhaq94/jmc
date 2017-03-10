@@ -9,18 +9,28 @@ using System.Web.Mvc;
 using InstituteMVC.Model;
 using InstituteMVC.DAL;
 using InstituteMVC.ViewModels;
+using InstituteMVC.Models;
 
 namespace InstituteMVC.Controllers
 {
     public class StudentController : Controller
     {
         private InstituteContext db = new InstituteContext();
-
+        private DAO jmc = new DAO();
         // GET: /Student/
         public ActionResult Index()
         {
-            var student = db.Student.Include(s => s.BioData);
-            return View(student.ToList());
+            string s = @"SELECT bd.Name + ' ' + bd.FatherName AS Name, bd.address, 
+                        bd.mobile, Students.CR, Students.classid, Students.innerRollNo, 
+                        Sections.classNameCode FROM BioDatas bd 
+                        INNER JOIN Students ON bd.bioId = Students.bioId 
+                        INNER JOIN Sections ON Students.classid = Sections.classId and Students.SDate = Sections.SDate 
+                        WHERE (Students.SDate = '" + Contstants.Session + "' and Students.isActive = 1 and Sections.isActive =1)";
+            
+            
+            //var student = db.Student.Include(s => s.BioData);
+            List<StudentCreationVM> scm = Contstants.ConvertDataTable<StudentCreationVM>(jmc.getdataTable(s));
+            return View(scm);
         }
 
         // GET: /Student/Details/5
@@ -43,6 +53,7 @@ namespace InstituteMVC.Controllers
         {
             // ViewBag.bioID = new SelectList(db.BioData, "bioID", "Name");
             StudentCreationVM svm = new StudentCreationVM();
+            svm.Class.DisplaySection = true;
             return View(svm);
         }
 
@@ -51,16 +62,28 @@ namespace InstituteMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="CR,SDate,bioID,ClassID,InnerRollNo,IsActive,FeeStatus,AttStatus,EnrolDate,OnLeave")] Student student)
+        public ActionResult Create(StudentCreationVM student)
         {
             if (ModelState.IsValid)
             {
-                db.Student.Add(student);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                string checkInnerRoll = "select innerRollNo from Student where innerRollNo = '" + student.RollNo + "' and classId ='" + student.Class.SlctdSection + "' and SDate = 2017";
+                string match = jmc.GetSingle(checkInnerRoll);
+                if (match == "" || match == null)
+                {
+                   if(doWork(student))
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+
+                    string jsMethodName1 = "DuplicateEntry()";
+                   // ScriptManager.RegisterClientScriptBlock(this, typeof(string), "uniqueKey", jsMethodName1, true);
+
+                }
+               
             }
 
-            ViewBag.bioID = new SelectList(db.BioData, "bioID", "Name", student.bioID);
+           
             return View(student);
         }
 
@@ -85,7 +108,7 @@ namespace InstituteMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="CR,SDate,bioID,ClassID,InnerRollNo,IsActive,FeeStatus,AttStatus,EnrolDate,OnLeave")] Student student)
+        public ActionResult Edit(Student student)
         {
             if (ModelState.IsValid)
             {
@@ -130,6 +153,73 @@ namespace InstituteMVC.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private bool doWork(StudentCreationVM Student)
+        {
+            var std = new Student();
+            var bio = new BioData();
+
+            string query = "select max(substring(CR,5,3))+1 from Student where classid = '" + Student.Class.SlctdSection + "' ";
+            string results = jmc.GetSingle(query);
+            string ClassRollNo;
+            if (results == null || results == "")
+            {
+
+                ClassRollNo = Student.Class.SlctdSection + "001";
+
+            }
+            else if (results.Length == 1)
+            {
+
+                ClassRollNo = Student.Class.SlctdSection + 0 + 0 + results;
+
+
+            }
+            else if (results.Length == 2)
+            {
+                ClassRollNo = Student.Class.SlctdSection + 0 + results;
+
+            }
+            else
+            {
+                ClassRollNo = Student.Class.SlctdSection + results;
+            }
+
+            bio.Name = Student.Name;
+            bio.FirstName = Student.FirstName;
+            bio.FatherName = Student.FathrName;
+            bio.Address = Student.Address;
+            //bio.Gender = ddlGnd.SelectedValue;
+            //bio.emai = txtMail.Text;
+            bio.Mobile = Student.Phone;
+
+            std.EnrolDate = DateTime.Parse(Student.EnDate);
+            std.ClassID = Student.Class.SlctdSection;
+            std.InnerRollNo = Student.RollNo;
+            std.IsActive = true;
+            std.FeeStatus = false;
+            std.AttStatus = true;
+            std.CR = ClassRollNo;
+            std.SDate = 2017;
+
+            foreach (var item in Student.SlctdSubjects)
+            {
+                var StdSubjents = new StudentSubjectMapping();
+                StdSubjents.CR = ClassRollNo;
+                StdSubjents.SDate = 2017;
+                StdSubjents.SbjID = Convert.ToInt32(item);
+                std.StudentSubjectMappings.Add(StdSubjents);
+
+            }
+
+            bio.Students.Add(std);
+            db.BioData.Add(bio);
+            if (db.SaveChanges() > 0)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

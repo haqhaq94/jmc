@@ -20,5 +20,12 @@ namespace InstituteMVC.Model
         public string Telephone { get; set; }
         public string Mobile { get; set; }
         public string FirstName { get; set; }
+
+        public virtual ICollection<Student> Students { get; set; }
+
+        public BioData()
+        {
+            this.Students = new HashSet<Student>();
+        }
     }
 }

@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using InstituteMVC.Model;
 using InstituteMVC.DAL;
 using InstituteMVC.ViewModels;
+using InstituteMVC.RequestResponse;
+using InstituteMVC.Models;
 
 namespace InstituteMVC.Controllers
 {
@@ -149,5 +151,37 @@ namespace InstituteMVC.Controllers
             svm.Sessions.Sessions = new SelectList(db.Session, "SName", "SstartDate");
             return svm;
         }
+
+        public ActionResult AddSectionSubject()
+        {
+            SectionSubjectVM ssvm = new SectionSubjectVM();
+            ssvm.Subjects = db.Subjects.ToList();
+            ssvm.Class.DisplaySection = true;
+            return View(ssvm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddSectionSubject(SectionSubjectVM vm)
+        {
+            foreach (var item in vm.SlctdSubjects)
+            {
+                SectionSubjectMapping ssm = new SectionSubjectMapping();
+                ssm.classId = vm.Class.SlctdSection;
+                ssm.SbjID = Convert.ToInt32(item);
+                ssm.SDate = 2017;
+                db.SectionSubjectMapping.Add(ssm);
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult GetSections(string classid) {
+            var result = (from sec in db.Class.Where(x => x.classId.Substring(0, 2) == classid)
+                          select new SectionResponse{ Id = sec.classId, Name = sec.classNameCode  } ).ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

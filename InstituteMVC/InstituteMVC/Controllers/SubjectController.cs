@@ -1,5 +1,6 @@
 ﻿using InstituteMVC.DAL;
 using InstituteMVC.Model;
+using InstituteMVC.RequestResponse;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -104,6 +105,15 @@ namespace InstituteMVC.Controllers
             db.Subjects.Remove(sbj);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult GetSubjects(string classid)
+        {
+            var query = (from sbj in db.SectionSubjectMapping.Where(id => id.classId == classid)
+                         select new SubjectInfo { Id = sbj.Subject.SbjID, Name = sbj.Subject.sbjName }).ToList();
+
+            return Json(query, JsonRequestBehavior.AllowGet);
         }
     }
 }

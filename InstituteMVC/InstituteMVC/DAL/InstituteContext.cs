@@ -1,4 +1,5 @@
 ﻿using InstituteMVC.Model;
+using InstituteMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -17,8 +18,9 @@ namespace InstituteMVC.DAL
         public DbSet<Section> Class { get; set; }
         public DbSet<Student> Student { get; set; }
         public DbSet<Test> Test { get; set; }
-
-        public System.Data.Entity.DbSet<InstituteMVC.Model.Subject> Subjects { get; set; }
+        public DbSet<SectionSubjectMapping> SectionSubjectMapping { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<StudentSubjectMapping> StudentSubjectMapping { get; set; }
 
         //protected override void OnModelCreating(DbModelBuilder modelBuilder)
         //{

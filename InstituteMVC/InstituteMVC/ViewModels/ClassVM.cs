@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InstituteMVC.InfraStructure;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,6 +14,9 @@ namespace InstituteMVC.ViewModels
         [Required(ErrorMessage="Please Select Class")]
         [Display(Name = "Select Class")]
         public string SlctdClassVal { get; set; }
+
+        public bool DisplaySection { get; set; }
+
         public IEnumerable<SelectListItem> ClassList
         {
             get
@@ -39,20 +43,28 @@ namespace InstituteMVC.ViewModels
             }
         }
 
-        private IEnumerable<SelectListItem> defualtVal
+        [ConditionalRequiredAttribute("DisplaySection==true")]
+        [Display(Name = "Select Section")]
+        public string SlctdSection { get; set; }
+
+        public IEnumerable<SelectListItem> Sections
         {
-
-            get
-            {
-
-                return Enumerable.Repeat(new SelectListItem { Value = "-1", Text = "Please Select Class" }, count: 1);
-            }
-
+            get;
+            set;
         }
-        public int SlctdSection { get; set; }
 
 
-        
+
+        //private IEnumerable<SelectListItem> defualtVal
+        //{
+
+        //    get
+        //    {
+
+        //        return Enumerable.Repeat(new SelectListItem { Value = "-1", Text = "Please Select Class" }, count: 1);
+        //    }
+
+        //}
 
 
     }

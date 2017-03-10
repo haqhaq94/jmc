@@ -1,4 +1,5 @@
-﻿@model InstituteMVC.ViewModels.SectionVM
+﻿@using InstituteMVC.InfraStructure
+@model InstituteMVC.ViewModels.SectionVM
 
 @{
     ViewBag.Title = "Create";
@@ -21,8 +22,7 @@
         <h4>Section</h4>
         <hr />
         @Html.ValidationSummary(true)
-
-        @Html.Partial("_ClassSelection")
+        @Html.PartialFor(m => m.Class, "EditorTemplates/_ClassSelection")
 
         <div class="form-group">
             @Html.LabelFor(model => model.Sessions.SlctdSesstion, new { @class = "control-label col-md-2" })

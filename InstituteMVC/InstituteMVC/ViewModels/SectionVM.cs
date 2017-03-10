@@ -10,6 +10,7 @@ namespace InstituteMVC.ViewModels
     public class SectionVM
     {
         public ClassVM Class { get; set; }
+        public int SlctdClassVal { get; set; }
         [Required(ErrorMessage="Name is required")]
         [Display(Name="Section Name")]
         public string SectionName { get; set; }

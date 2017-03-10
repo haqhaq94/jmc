@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InstituteMVC.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace InstituteMVC.Model
         [Required]
         [Display(Name="Subject Name")]
         public string sbjName { get; set; }
+
+        public virtual ICollection<SectionSubjectMapping> SectionSubjectMapping { get; set; }
     }
 }

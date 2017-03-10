@@ -13,5 +13,6 @@ namespace InstituteMVC.ViewModels
         [Display(Name = "Select Session")]
         public int SlctdSesstion { get; set; }
         public IEnumerable<SelectListItem> Sessions { get; set; }
+
     }
 }

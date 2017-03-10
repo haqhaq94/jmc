@@ -8,6 +8,9 @@ namespace InstituteMVC.ViewModels
 {
     public class StudentCreationVM
     {
+        public string CR { get; set; }
+        public int SDate { get; set; }
+
         [Required]
         [Display(Name="Student Name")]
         public string Name { get; set; }
@@ -32,7 +35,7 @@ namespace InstituteMVC.ViewModels
 
         [Required]
         [Display(Name = "Enrollment Date")]
-        public DateTime EnDate { get; set; }
+        public string EnDate { get; set; }
 
         [Required]
         public string RollNo { get; set; }
@@ -40,9 +43,17 @@ namespace InstituteMVC.ViewModels
         public ClassVM Class { get; set; }
         public SessionVM Sessions { get; set; }
 
+        [Required]
+        [Display(Name = "Subjects")]
+        public IList<string> SlctdSubjects { get; set; }
+
+
+
+
         public StudentCreationVM()
         {
             Class = new ClassVM();
+            Class.DisplaySection = true;
         }
     }
 }

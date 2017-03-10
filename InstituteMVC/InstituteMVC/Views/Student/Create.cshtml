@@ -1,4 +1,5 @@
-﻿@model InstituteMVC.ViewModels.StudentCreationVM
+﻿@using InstituteMVC.InfraStructure
+@model InstituteMVC.ViewModels.StudentCreationVM
 
 @{
     ViewBag.Title = "Create";
@@ -12,12 +13,24 @@
             format: 'DD/MM/YYYY'
         });
 
-        $("#SlctdClassVal").on("change", function () {
-            if (this.value.trim().length > 0)
-            {
-                $.ajax();
-            }
-        })
+        $('#SlctdSection').change(function () {
+            $.ajax({
+                type: "post",
+                url: "/Subject/GetSubjects",
+                data: { classid: $('#SlctdSection').val() },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    var district = "<div id='SlctdSubjects'>";
+                    for (var i = 0; i < data.length; i++) {
+                        district = district + '<div class="checkbox"> <label><input type="checkbox" checked name="SlctdSubjects" value=' + data[i]["Id"] + '>' + data[i]["Name"] + '</label></div>';
+                    }
+                    district = district + '</div>';
+                    $('#SlctdSubjects').html(district);
+                    $("#FormSlctdSubjects").show();
+                }
+            });
+        });
     });
 </script>
 
@@ -93,7 +106,16 @@
             </div>
         </div>
 
-        @Html.Partial("_ClassSelection",Model.Class)
+        @Html.PartialFor(m => m.Class, "EditorTemplates/_ClassSelection")
+
+        <div class="form-group" id="FormSlctdSubjects" style="display:none">
+            @Html.LabelFor(model => model.SlctdSubjects, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div id='SlctdSubjects'></div>
+                @Html.ValidationMessageFor(model => model.SlctdSubjects)
+            </div>
+        </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.RollNo, new { @class = "control-label col-md-2" })
